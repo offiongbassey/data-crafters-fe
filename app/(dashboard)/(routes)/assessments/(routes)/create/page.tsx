@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const CreateLesson = () => {
+const CreateAssessment = () => {
     return (
         <div className="padding-container mt-10">
-            <h2 className="font-semibold text-2xl">Create A Lesson</h2>
+            <h2 className="font-semibold text-2xl">Create An Assessment</h2>
             <div className="rounded-2xl bg-white p-4 md:p-10 mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
@@ -25,8 +25,6 @@ const CreateLesson = () => {
                         <Input className="h-12" placeholder="Duration" name="duration" />
                     </div>
                 </div>
-                <label>Lesson Outcome</label>
-                <Textarea className="" placeholder="type learning outcomes" ></Textarea>
                 <div className="flex justify-center mt-10">
                     <Button className="w-40">Create</Button>
                 </div>
@@ -35,4 +33,4 @@ const CreateLesson = () => {
     )
 }
 
-export default CreateLesson;
+export default CreateAssessment;

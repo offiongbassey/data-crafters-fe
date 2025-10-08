@@ -25,29 +25,29 @@ const SKILLS = [
 export default function Home() {
     return (
       <div className="padding-container">
-        <div className="bg-purple-800 rounded-2xl shadow-xl shadow-blue-100 py-5 px-20 mb-4 -wfull text-white">
-                <h4 className="text-3xl">Empower Your Teaching with AI <span className="text-4xl">🎯</span></h4>
-                <p className="text-sm text-gray-200">Create structured, engaging, and curriculum-aligned lessons in seconds.
+        <div className="bg-purple-800 rounded-2xl shadow-xl shadow-blue-100 p-4 md:p-5 mb-4 -wfull text-white">
+                <h4 className="text-base md:text-3xl">Empower Your Teaching with AI <span className="text-sm md:text-4xl">🎯</span></h4>
+                <p className="hidden md:block text-sm text-gray-200">Create structured, engaging, and curriculum-aligned lessons in seconds.
                 Our AI-powered assistant helps you design lesson plans, teaching aids, and assessments — personalized to your subject, context, and students.</p>
         </div>
-        <div className="flex justify-between gap-8">
+        <div className="flex flex-col md:flex-row justify-between md:gap-8">
             <div className="w-full md:w-[70%]">
-                <div className="flex items-start justify-between gap-4">
-                    <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-4">
+                <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+                    <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-2 md:p-4">
                         <BookCheck size={50} className="bg-green-200 p-2 text-green-800 rounded-xl" />
                         <div>
                             <p className=" text-gray-600">Total Lessons</p>
                             <p className=" font-semibold">20</p>
                         </div>
                     </div>
-                    <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-4">
+                    <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-2 md:p-4">
                         <ListCheck size={50} className="bg-purple-200 p-2 text-purple-800 rounded-xl" />
                         <div>
                             <p className=" text-gray-600">Total Assessments</p>
                             <p className=" font-semibold">4</p>
                         </div>
                     </div>
-                    <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-4">
+                    <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-2 md:p-4">
                         <ListTodo size={50} className="bg-blue-200 p-2 text-blue-800 rounded-xl" />
                         <div>
                             <p className=" text-gray-600">Total Tasks</p>

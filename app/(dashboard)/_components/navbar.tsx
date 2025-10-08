@@ -1,14 +1,20 @@
-import { Bell, Mail, UserRound } from "lucide-react";
+import ToolTip from "@/components/Tooltip";
+import { Bell, Mail, Menu, UserRound } from "lucide-react";
 
-const Navbar = () => {
+type Props = {
+    toggle: boolean;
+    setToggle: () => void;
+}
+
+const Navbar = ({ toggle, setToggle }: Props) => {
     return (
-        <nav className="flex items-center justify-between gap-2 w-full padding-container mt-6 mb-4">
-            <h2 className="text-2xl">Welcome, Daniel</h2>
+        <nav className="flex items-center justify-between md:justify-end gap-2 w-full padding-container mt-6 mb-4">
+            <Menu className="block md:hidden" onClick={setToggle}/>
                 <div className="flex items-center gap-2">
-                    <Mail size={30} className="rounded-full border p-2" />|
-                    <Bell size={30} className="rounded-full border p-2"/>|
+                    <ToolTip message="Messages"><Mail size={30} className="rounded-full border p-2" /></ToolTip>|
+                    <ToolTip message="Notifications"><Bell size={30} className="rounded-full border p-2"/></ToolTip>|
                     <div className="flex items-center justify-between gap-1">
-                        <UserRound size={30} className="rounded-full border p-2"/>
+                        <ToolTip message="Profile"><UserRound size={30} className="rounded-full border p-2"/></ToolTip>
                         <p>Daniel J.</p>
                     </div>
                 </div>
