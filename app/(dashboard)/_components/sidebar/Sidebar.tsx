@@ -44,7 +44,7 @@ const Sidebar = ({ toggle, setToggle }: Props) => {
         <div  className={`px-10 py-6 bg-white ${toggle ? "flex": "hidden md:flex"} flex-col justify-between h-screen min-w-62 fixed md:static`}>
             <div className="flex flex-col justify-between gap-14">
                 <div className="flex gap-4 items-center">
-                    <Link href={"/"}><h1 className="flex gap-1 font-semibold text-base md:text-xl"><TrendingUpDown size={20} />Data Crafters</h1></Link>
+                    <Link href={"/"}><h1 className="flex gap-1 font-semibold text-base md:text-2xl"><TrendingUpDown size={20} />EduAI</h1></Link>
                     <X className="block md:hidden" onClick={setToggle}/>
                 </div>
                 
