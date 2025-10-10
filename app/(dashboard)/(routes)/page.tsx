@@ -1,7 +1,13 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useAuthStore } from "@/store/auth";
+import axios from "axios";
 import { BookCheck, CircleCheck, CircleDashed, LayoutPanelTop, ListCheck, ListTodo } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const SKILLS = [
     {
@@ -22,7 +28,47 @@ const SKILLS = [
     }
 ]
 
+type AnalyticsType = {
+    total_lessons: number;
+    total_assessments: number;
+}
+
 export default function Home() {
+    const [analytics, setAnalytics] = useState<AnalyticsType>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const user = useAuthStore((state) => (state.user))
+
+    useEffect(() => {
+        const fetchLesson = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/dashboard/analytics`, {
+                    headers: {
+                        Authorization: `Bearer ${user?.token}`,
+                      },
+                });
+                setLoading(false);
+                setAnalytics(res.data);
+                // console.log("Res: ", res);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              } catch (error: any) {
+                setLoading(false);
+                if (error.response) {
+                    // Server responded with a non-2xx status
+                    return toast.error(error.response.data.detail);
+                } else if (error.request) {
+                    // Request made but no response received
+                } else {
+                    // Something else happened
+                }
+                toast.error("Something went wrong. Try again later");
+              }
+        }
+        fetchLesson();
+    }, [user?.token]);
+
+    console.log("Lesson:", analytics);
+
     return (
       <div className="padding-container">
         <div className="bg-purple-800 rounded-2xl shadow-xl shadow-blue-100 p-4 md:p-5 mb-4 -wfull text-white">
@@ -37,14 +83,14 @@ export default function Home() {
                         <BookCheck size={50} className="bg-green-200 p-2 text-green-800 rounded-xl" />
                         <div>
                             <p className=" text-gray-600">Total Lessons</p>
-                            <p className=" font-semibold">20</p>
+                            <p className=" font-semibold">{analytics?.total_lessons}</p>
                         </div>
                     </div>
                     <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-2 md:p-4">
                         <ListCheck size={50} className="bg-purple-200 p-2 text-purple-800 rounded-xl" />
                         <div>
                             <p className=" text-gray-600">Total Assessments</p>
-                            <p className=" font-semibold">4</p>
+                            <p className=" font-semibold">{analytics?.total_assessments}</p>
                         </div>
                     </div>
                     <div className="bg-white rounded-2xl w-full flex items-center gap-4 p-2 md:p-4">

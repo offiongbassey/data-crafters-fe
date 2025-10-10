@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuthStore } from "@/store/auth";
 import { BookCheck, LayoutDashboard, ListCheck, ListTodo, LogOut, Menu, Mic, Settings, TrendingUpDown, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,11 +16,11 @@ const LINKS = [
         icon: BookCheck,
         link: "/lessons"
     },
-    {
-        title: "Assessment",
-        icon: ListCheck,
-        link: "/assessments"
-    },
+    // {
+    //     title: "Assessment",
+    //     icon: ListCheck,
+    //     link: "/assessments"
+    // },
     {
         title: "Task",
         icon: ListTodo,
@@ -39,6 +40,7 @@ type Props = {
 
 const Sidebar = ({ toggle, setToggle }: Props) => {
     const pathName = usePathname();
+    const logout = useAuthStore((state) => state.logout)
 
     return (
         <div  className={`px-10 py-6 bg-white ${toggle ? "flex": "hidden md:flex"} flex-col justify-between h-screen min-w-62 fixed md:static`}>
@@ -59,8 +61,8 @@ const Sidebar = ({ toggle, setToggle }: Props) => {
                 
             </div>
             <ul className="flex flex-col gap-6">
-                <li onClick={setToggle} className="flex gap-2 items-center"><Settings /> Settings</li>
-                <li  onClick={setToggle} className="flex gap-2 items-center"><LogOut /> Logout</li>
+                <li onClick={setToggle} className="flex cursor-pointer gap-2 items-center"><Settings /> Settings</li>
+                <li  onClick={() => logout()} className="flex gap-2 cursor-pointer items-center"><LogOut /> Logout</li>
             </ul>
         </div>
     )
