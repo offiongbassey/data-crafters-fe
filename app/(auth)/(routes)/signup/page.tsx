@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LoginFormSchema } from "@/lib/validationSchema";
+import { LoginFormSchema, SignupFormSchema } from "@/lib/validationSchema";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,24 +18,25 @@ import Link from "next/link";
 const Login = () => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
-    const form = useForm<z.infer <typeof LoginFormSchema>>({
-        resolver: zodResolver(LoginFormSchema),
+    const form = useForm<z.infer <typeof SignupFormSchema>>({
+        resolver: zodResolver(SignupFormSchema),
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            name: ""
         }
     });
 
-    const onSubmit =  async (data: z.infer<typeof LoginFormSchema>) => {
+    const onSubmit =  async (data: z.infer<typeof SignupFormSchema>) => {
 
         try {
             setLoading(true);
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/auth/login`, data);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/auth/signup`, data);
             setLoading(false);
 
-            useAuthStore.getState().setUser(res.data);
-            toast.success("Login Successful");
-            router.push("/");
+            console.log("data: ", res);
+            toast.success("Account Created Successfully. Please login.");
+            router.push("/login");
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (error: any) {
             setLoading(false);
@@ -60,15 +61,35 @@ const Login = () => {
             </div>
             <div className="w-full md:w-[70%] flex flex-col justify-center items-center">
                 <div className="flex flex-col justify-center max-w-[520px] rounded-4xl md:shadow-sm shadow-zinc-300 p-4 md:p-20">
-                    <h2 className="text-xl md:text-3xl font-bold text-center">Welcome back to EduAI</h2>
+                    <h2 className="text-xl md:text-3xl font-bold text-center">Welcome to EduAI</h2>
                     <p className="text-gray-600 text-center text-sm mt-2 mb-10">We&apos;ve built a standard teaching assistant for you.</p>
+                    
+                   
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
                         <FormField
                             control={form.control}
-                            name='email'
+                            name='name'
                             render={({ field }) => (
                             <FormItem>
+                                <FormLabel>Name</FormLabel>
+                                <FormControl>
+                                <Input
+                                    type='text'
+                                    className='p-5 w-full'
+                                    placeholder='Enter your name'
+                                    {...field}
+                                />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='email'
+                            render={({ field }) => (
+                            <FormItem className="mt-4">
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
                                 <Input
@@ -100,10 +121,9 @@ const Login = () => {
                             </FormItem>
                             )}
                         />
-
-                        <p className="text-purple-600 text-sm mb-6">Forgot Password?</p>
-                        <Button disabled={loading} type="submit" className="h-12 w-full" >{loading ? <Spinner />: "Login"}</Button>
-                        <p className="text-sm mb-6 mt-4 text-center">Don&apos;t have an account? <Link className="text-purple-600" href={"/signup"}>Sign Up</Link></p>
+                        
+                        <Button disabled={loading} type="submit" className="h-12 w-full mt-6" >{loading ? <Spinner />: "Login"}</Button>
+                        <p className="text-sm mb-6 mt-4 text-center">Already have an account? <Link className="text-purple-600" href={"/login"}>Login</Link></p>
                         </form>
                     </Form>
 

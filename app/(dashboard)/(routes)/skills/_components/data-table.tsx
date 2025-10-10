@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
     ColumnDef,
@@ -13,15 +13,61 @@ import {
 import { Ellipsis } from "lucide-react";
 import Link from "next/link";
 
-export type LessonType = {
+export type SkillType = {
   id: number;
-  topic: string;
-  subject: string;
-  grade: number;
-  duration: number;
-  content: LessonContent;
+  title: string;
+  description: string;
+  level: string;
+  total_sections: number;
+  category: string;
+  estimated_duration: string;
+  thumbnail_url: string;
   created_at: string;
+  sections: SectionType[];
+  test: TestType[];
+  progress_record: ProgressRecordType;
 };
+
+type SectionType = {
+    id: number;
+    order: number;
+    title: string;
+    content: string;
+    video_url: string;
+    resource_url: string;
+    completed: boolean;
+    duration: string;
+    quiz_included: boolean;
+}
+
+type TestType = {
+    id: number;
+    status: string;
+    total_questions: number;
+    time_limit: number;
+    attempts: number;
+    questions: QuestionType[]
+}
+
+type QuestionType = {
+    id: number;
+    question: string;
+    options: object;
+    correct_answer: string;
+    explanation: string;
+    difficulty: string;
+}
+
+type ProgressRecordType = {
+    id: number;
+    completed_sections: number;
+    progress: number;
+    completed: boolean;
+    score: number;
+    started_at: string;
+    completed_at: string;
+    last_accessed_section_id: string;
+}
 
 export type AssessmentType = {
     id: number;
@@ -41,75 +87,61 @@ type QuestionsType = {
     answer: string;
 }
 
-type LessonContent = {
-        lesson_title: string,
-        subject_and_grade: string,
-        duration: string,
-        lesson_objectives: [],
-        instructional_materials: [],
-        lesson_introduction: string,
-        lesson_development: LessonDevelopment[],
-        learner_activities: LessonActivity[],
-        summary: string,
-        extension_activity: string,
-        teacher_reflection: string
-}
-
-type LessonDevelopment = {
-    activity: string,
-    details: string,
-    time: string
-}
-
-type LessonActivity = {
-    activity: string,
-    details: string,
-    time: string
-}
-
 interface DataTableProps<TData> {
   data: TData[];
 }
 
 export function DataTable({
     data,
-}: DataTableProps<LessonType>) {
+}: DataTableProps<SkillType>) {
 
-  const columns: ColumnDef<LessonType>[] = [
+  const columns: ColumnDef<SkillType>[] = [
     {
-      accessorKey: 'topic',
-      header: 'Topic',
+      accessorKey: 'title',
+      header: 'Title',
       cell: ({ row }) => {
         return (
-        <p>{row.original.topic}</p>
+        <p>{row.original.title}</p>
       )
       },
     },
+    
     {
-      accessorKey: 'subject',
-      header: 'Subject',
-      cell: ({ row }) => {
-        return (
-        <p>{row.original.subject}</p>
-        )
-      }
+      accessorKey: 'category',
+      header: 'Category',
     },
     {
-      accessorKey: 'grade',
-      header: 'Grade',
-    },
-    {
-      accessorKey: 'duration',
-      header: 'duration',
+      accessorKey: 'estimated_duration',
+      header: 'Duration',
       cell: ({ row }) => {
-        const duration = row.original?.duration;
+        const duration = row.original.estimated_duration;
         return (
           <>
-          {duration < 60 ? `${duration} Minutes` : `${duration / 60} Hour`}
+          {duration}
           </>
         )
       }
     },
+    {
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.original?.progress_record?.completed;
+          
+          return (
+          <p className={`${status ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-500"} py-1 text-xs text-center`}>{status ? "Completed": "Pending"}</p>
+          )
+        }
+      },
+      {
+        header: 'Progress',
+        cell: ({ row }) => {
+          const progress = row.original?.progress_record?.progress;
+          
+          return (
+          <p>%{progress}</p>
+          )
+        }
+      },
     {
       accessorKey: 'created_at',
       header: 'Date',
@@ -141,22 +173,16 @@ export function DataTable({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuGroup>
-          <Link href={`/lessons/${row.original.id}`}>
+          <Link href={`/skills/${row.original.id}`}>
             <DropdownMenuItem>
-                View Content
+                Continue
             </DropdownMenuItem>
           </Link>
-          <Link href={`/assessments/${row.original.id}`}>
+          <Link href={`/skills/${row.original.id}`}>
             <DropdownMenuItem>
-                View Assessment
+                View
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Delete
-          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -231,7 +257,7 @@ export function DataTable({
                   >
                     <div className="flex flex-col gap-4 w-full items-center justify-center py-20">
                       
-                      <p>No lesson created yet.</p>
+                      <p>No skill created yet.</p>
                     </div>
                   </TableCell>
                 </TableRow>

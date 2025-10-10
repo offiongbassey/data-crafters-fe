@@ -10,6 +10,19 @@ export const LoginFormSchema = z.object({
     .min(6, { message: 'Password must be at least 6 characters.' }),
 })
 
+export const SignupFormSchema = z.object({
+    name: z
+    .string()
+    .min(3, { message: 'Name is required.' }),
+    email: z
+    .string()
+    .email({ message: 'Invalid email address.' })
+    .min(5, { message: 'Email must be at least 5 characters.' }),
+    password: z
+    .string()
+    .min(6, { message: 'Password must be at least 6 characters.' }),
+})
+
 export const CreateLessonFormSchema = z.object({
     curriculum_unit_id: z.int().min(1, "Please select curriculum"),
     topic: z.string().min(3, "Topic is required."),
