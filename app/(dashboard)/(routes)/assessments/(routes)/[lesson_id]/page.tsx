@@ -14,8 +14,6 @@ const AssessmentPage = ({ params }: { params: Promise<{ lesson_id: string }>}) =
     const [loading, setLoading] = useState<boolean>(false);
     const user = useAuthStore((state) => (state.user))
 
-    console.log("Praams:", lesson_id);
-
     useEffect(() => {
         const fetchLesson = async () => {
             try {
@@ -44,8 +42,6 @@ const AssessmentPage = ({ params }: { params: Promise<{ lesson_id: string }>}) =
         fetchLesson();
     }, [user?.token, lesson_id]);
 
-    console.log("Lesson:", assessment);
-
     return (
         <div className="padding-container">
             <h1 className="px-4 text-2xl font-semibold">Assessment</h1>
@@ -54,10 +50,10 @@ const AssessmentPage = ({ params }: { params: Promise<{ lesson_id: string }>}) =
                     <Spinner className="size-8" />Loading
                 </div>
                 :
-                <div className="flex flex-col gap-4 p-4">
+                <div className="grid grid-cols-2 gap-4 px-4 py-10 mt-4 bg-white rounded-2xl">
                     {assessment?.content.questions.map((item, key) => (
                     <div key={key}>
-                        <h2>{item.question}</h2> 
+                        <h2>({key+1}) {item.question}</h2> 
                         <ol className="list-[lower-alpha] pl-6 mb-4">
                             {item.options.map((option, key) => {
                                 const optionValue = String(Object.values(option)[0]);

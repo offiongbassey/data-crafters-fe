@@ -15,8 +15,10 @@ function DashboardLayout({ children }: Props) {
     return (
         <ProtectedRoute>
             <div className="flex bg-gray-100">
+                <div className="bg-white md:w-72">
                 <Sidebar toggle={toggle} setToggle={(() => setToggle((prev) => !prev))}/>
-                <div className="w-full overflow-y-scroll">
+                </div>
+                <div className="w-full overflow-y-scroll h-screen">
                     <Navbar toggle={toggle} setToggle={(() => setToggle((prev) => !prev))}/>
                     {children}
                 </div>

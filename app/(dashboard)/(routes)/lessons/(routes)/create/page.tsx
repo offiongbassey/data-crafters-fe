@@ -4,19 +4,31 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { CreateLessonFormScehema } from "@/lib/validationSchema";
+import { CreateLessonFormSchema } from "@/lib/validationSchema";
+import { useAuthStore } from "@/store/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import z from "zod";
+
+type CurriculumType = {
+    id: number;
+    title: string;
+}
 
 const CreateLesson = () => {
     const router = useRouter();
         const [loading, setLoading] = useState<boolean>(false);
-        const form = useForm<z.infer <typeof CreateLessonFormScehema>>({
-            resolver: zodResolver(CreateLessonFormScehema),
+        const [curriculums, setCurriculums] = useState<CurriculumType[]>([]);
+        const user = useAuthStore((state) => state.user);
+
+        const form = useForm<z.infer <typeof CreateLessonFormSchema>>({
+            resolver: zodResolver(CreateLessonFormSchema),
             defaultValues: {
                 curriculum_unit_id: 0,
                 topic: "",
@@ -28,9 +40,78 @@ const CreateLesson = () => {
             }
         });
 
-        const onSubmit = async (data: z.infer<typeof CreateLessonFormScehema>) => {
+        useEffect(() => {
+            const fetchLesson = async () => {
+                try {
+                    const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/curriculum`, {
+                        headers: {
+                            Authorization: `Bearer ${user?.token}`,
+                          },
+                    });
+                    setCurriculums(res.data);
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } catch (error: any) {
+                    if (error.response) {
+                        // Server responded with a non-2xx status
+                        return toast.error(error.response.data.detail);
+                    } else if (error.request) {
+                        // Request made but no response received
+                    } else {
+                        // Something else happened
+                    }
+                    toast.error("Something went wrong. Try again later");
+                  }
+            }
+            fetchLesson();
+        }, [user?.token]);
+
+        const onSubmit = async (data: z.infer<typeof CreateLessonFormSchema>) => {
             console.log("Data: ", data);
+
+            try {
+                setLoading(true);
+                const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/lessons`, data, {
+                    headers: {
+                        Authorization: `Bearer ${user?.token}`,
+                      },
+                });
+                setLoading(false);
+    
+                console.log("data: ", res);
+                toast.success("Lesson Created Successfully.");
+                router.push("/lessons");
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              } catch (error: any) {
+                setLoading(false);
+                if (error.response) {
+                    // Server responded with a non-2xx status
+                    return toast.error(error.response.data.detail);
+                } else if (error.request) {
+                    // Request made but no response received
+                } else {
+                    // Something else happened
+                }
+                toast.error("Something went wrong. Try again later");
+              }
         }
+
+        const handleGradeChange = (grade: string) => {
+            form.setValue("grade", Number(grade));
+        }
+
+        const handleDurationChange = (duration: string) => {
+            form.setValue("duration", Number(duration));
+        }
+
+        const handleCurriculumChange = (curr: string) => {
+            form.setValue("curriculum_unit_id", Number(curr));
+        }
+
+        const handleNoOfQuestionsChange = (no: string) => {
+            form.setValue("no_of_questions", Number(no));
+        }
+
+        console.log("curriculums:", curriculums)
 
     return (
         <div className="padding-container mt-10">
@@ -86,19 +167,18 @@ const CreateLesson = () => {
                                 <FormItem>
                                     <FormLabel>Grade</FormLabel>
                                     <FormControl>
-                                    <Select>
+                                    <Select
+                                        onValueChange={(grade) => {
+                                            handleGradeChange(grade)
+                                        }}
+                                    >
                                         <SelectTrigger className="w-full py-6">
                                             <SelectValue placeholder="Grade" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="1">1</SelectItem>
-                                            <SelectItem value="2">2</SelectItem>
-                                            <SelectItem value="3">3</SelectItem>
-                                            <SelectItem value="4">4</SelectItem>
-                                            <SelectItem value="5">5</SelectItem>
-                                            <SelectItem value="6">6</SelectItem>
-                                            <SelectItem value="7">6</SelectItem>
-                                            <SelectItem value="8">8</SelectItem>
+                                            {[1,2,3,4,5].map((item) => (
+                                            <SelectItem key={item} value={item.toString()}>{item}</SelectItem>
+                                        ))}
                                         </SelectContent>
                                     </Select>
                                     </FormControl>
@@ -114,7 +194,11 @@ const CreateLesson = () => {
                                 <FormItem>
                                     <FormLabel>Duration</FormLabel>
                                     <FormControl>
-                                    <Select>
+                                    <Select
+                                        onValueChange={(duration) => {
+                                            handleDurationChange(duration)
+                                        }}
+                                    >
                                         <SelectTrigger className="w-full py-6">
                                             <SelectValue placeholder="Duration" />
                                         </SelectTrigger>
@@ -140,12 +224,20 @@ const CreateLesson = () => {
                                 <FormItem>
                                     <FormLabel>Number of Questions</FormLabel>
                                     <FormControl>
-                                    <Input
-                                        type='number'
-                                        className='p-5 w-full'
-                                        placeholder='Enter Number of Questions'
-                                        {...field}
-                                    />
+                                    <Select
+                                        onValueChange={(no) => {
+                                            handleNoOfQuestionsChange(no)
+                                        }}
+                                    >
+                                        <SelectTrigger className="w-full py-6">
+                                            <SelectValue placeholder="Grade" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {[1,2,3,4,5,6,7,8,9,10].map((item) => (
+                                            <SelectItem key={item} value={item.toString()}>{item}</SelectItem>
+                                        ))}
+                                        </SelectContent>
+                                    </Select>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -159,14 +251,18 @@ const CreateLesson = () => {
                                 <FormItem>
                                     <FormLabel>Curriculum</FormLabel>
                                     <FormControl>
-                                    <Select>
+                                    <Select
+                                        onValueChange={(curr) => {
+                                            handleCurriculumChange(curr)
+                                        }}
+                                    >
                                         <SelectTrigger className="w-full py-6">
                                             <SelectValue placeholder="Curriculum" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="10">English</SelectItem>
-                                            <SelectItem value="20">From db</SelectItem>
-                                        
+                                            {curriculums.map((curr) => (
+                                                <SelectItem key={curr.id} value={curr.id.toString()}>{curr.title}</SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                     </FormControl>
@@ -192,7 +288,7 @@ const CreateLesson = () => {
                         />
                        
                 <div className="flex justify-center mt-10">
-                    <Button type="submit" className="w-40">Create</Button>
+                    <Button disabled={loading} type="submit" className="w-40">{loading ? <Spinner/> : "Create"}</Button>
                 </div>
                 </form>
                 </Form>

@@ -101,6 +101,14 @@ export function DataTable({
     {
       accessorKey: 'duration',
       header: 'duration',
+      cell: ({ row }) => {
+        const duration = row.original.duration;
+        return (
+          <>
+          {duration < 60 ? `${duration} Minutes` : `${duration / 60} Hour`}
+          </>
+        )
+      }
     },
     {
       accessorKey: 'created_at',
