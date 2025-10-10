@@ -7,6 +7,7 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Spinner } from "@/components/ui/spinner";
+import { useAuthStore } from "@/store/auth";
 
 type Message = {
     sender: "user" | "viola";
@@ -19,6 +20,7 @@ const VoiceAssistant = () => {
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModelSpeaking, setIsModelSpeaking] = useState<boolean>(false);
+  const user = useAuthStore((state) => state.user);
 
   // 🎙️ Toggle speech recognition
   const toggleListening = () => {
@@ -106,7 +108,7 @@ const VoiceAssistant = () => {
     return (
         <div className="padding-container py-4">
             <div className="bg-white p-4 md:p-20 rounded-4xl w-full flex flex-col items-center justify-center">
-            <p className="text-2xl mb-10">🎓 Hi Daniel — Your Teaching Copilot</p>
+            <p className="text-2xl mb-10">🎓 Hi {user?.name} — Your Teaching Copilot</p>
                 {messages.length < 1 || isListening ?
                 <Image src={"/assets/audio2.jpg"} alt="voice" width={200} height={200} />
                 :

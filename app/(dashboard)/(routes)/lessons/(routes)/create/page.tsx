@@ -111,8 +111,6 @@ const CreateLesson = () => {
             form.setValue("no_of_questions", Number(no));
         }
 
-        console.log("curriculums:", curriculums)
-
     return (
         <div className="padding-container mt-10">
             <h2 className="font-semibold text-2xl">Create A Lesson</h2>

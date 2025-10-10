@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/auth";
-import { BookCheck, LayoutDashboard, ListCheck, ListTodo, LogOut, Menu, Mic, Settings, TrendingUpDown, X } from "lucide-react";
+import { BookCheck, GraduationCap, LayoutDashboard, ListTodo, LogOut, Mic, Settings, TrendingUpDown, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,15 +16,10 @@ const LINKS = [
         icon: BookCheck,
         link: "/lessons"
     },
-    // {
-    //     title: "Assessment",
-    //     icon: ListCheck,
-    //     link: "/assessments"
-    // },
     {
-        title: "Task",
-        icon: ListTodo,
-        link: "/tasks"
+        title: "Skills",
+        icon: GraduationCap,
+        link: "/skills"
     },
     {
         title: "Voice Assistant",
