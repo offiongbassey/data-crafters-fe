@@ -33,8 +33,7 @@ const Login = () => {
             setLoading(true);
             const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/auth/signup`, data);
             setLoading(false);
-
-            console.log("data: ", res);
+            
             toast.success("Account Created Successfully. Please login.");
             router.push("/login");
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -130,11 +130,7 @@ export function DataTable({
           return (
             <DropdownMenu>
       <DropdownMenuTrigger asChild>
-      <button
-              onClick={() => {
-                console.log("Viewing row:", row.original);
-                // navigate to detail page or show modal
-              }}
+            <button
             >
               <Ellipsis />
             </button>

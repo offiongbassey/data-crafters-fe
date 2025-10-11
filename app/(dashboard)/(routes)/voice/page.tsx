@@ -61,6 +61,7 @@ const VoiceAssistant = () => {
   // 🧠 Send user message to Gemini API
   const sendToGemini = async (message: string) => {
     try {
+
       const res = await fetch("/api/viola", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

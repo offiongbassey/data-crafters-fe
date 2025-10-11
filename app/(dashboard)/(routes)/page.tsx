@@ -55,7 +55,6 @@ export default function Home() {
                 setAnalytics(analytics_count_res.data);
                 setChartData(chartFormatted);
                 
-                // console.log("Res: ", res);
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               } catch (error: any) {
                 setLoading(false);
