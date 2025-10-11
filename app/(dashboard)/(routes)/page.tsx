@@ -75,7 +75,7 @@ export default function Home() {
     return (
       <div className="padding-container">
         <div className="bg-purple-800 rounded-2xl shadow-xl shadow-blue-100 p-4 md:p-5 mb-4 -wfull text-white">
-                <h4 className="text-base md:text-3xl">Empower Your Teaching with AI <span className="text-sm md:text-4xl">🎯</span></h4>
+                <h4 className="text-base md:text-3xl">Empower Your Teaching with AI</h4>
                 <p className="hidden md:block text-sm text-gray-200">Create structured, engaging, and curriculum-aligned lessons in seconds.
                 Our AI-powered assistant helps you design lesson plans, teaching aids, and assessments — personalized to your subject, context, and students.</p>
         </div>
