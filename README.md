@@ -78,40 +78,18 @@ npm run dev
 ```
 
 
-Visit http://localhost:3000
- to view the project.
----
+
+
 ## Folder Structure
+```bash
 app/
- ├── (auth)/            # Login & Signup pages
- ├── (dashboard)/       # Main teacher dashboard
- ├── lessons/            # Lesson generation pages
- ├── skills/             # Skill-based learning features
- ├── voice/             # AI Voice Assistant
- └── components/        # UI components (buttons, cards, modals)
----
-## Background
-
-In September 2025, Nigeria introduced a new national curriculum for primary and secondary schools.
-This reform, led by the Federal Ministry of Education, NERDC, and UBEC, aims to reduce subject overload and promote practical, skill-based learning that prepares students for the 21st-century workforce.
-
-However, the Nigeria Union of Teachers (NUT) raised concerns about teacher preparedness, inadequate infrastructure, and limited resources. EduAI seeks to bridge this gap through AI-driven, data-informed support that empowers teachers and enhances classroom readiness.
----
-
-## Regional Context
-
-Educational challenges extend across Sub-Saharan Africa:
-
-57% of primary school-age children globally who lack access to education live in Sub-Saharan Africa — over 97.5 million children.
-
-Only 22% of countries in the region have student ID systems for personalized learning.
-
-In Ghana, just 15% of primary schools have functioning ICT facilities.
-
-Rural universities in South Africa still struggle with digital adoption in teaching and learning.
-
-These challenges highlight the urgent need for AI-assisted, inclusive, and scalable education technologies — like EduAI.
----
+  ├── (auth)/            # Login & Signup pages
+  ├── (dashboard)/       # Main teacher dashboard
+  ├── lessons/            # Lesson generation pages
+  ├── skills/             # Skill-based learning features
+  ├── voice/             # AI Voice Assistant
+  └── components/        # UI components (buttons, cards, modals)
+```
 
 ## Deliverables
 ✅ Validated Understanding of Teacher Needs
