@@ -8,7 +8,9 @@ export async function POST(req: NextRequest) {
   try {
     const { message }: { message: string } = await req.json();
 
-    const result = await model.generateContent(message);
+    const prompt = `Reply to the user concisely (max 5 sentences). User said: ${message}`;
+
+    const result = await model.generateContent(prompt);
     const response = result.response.text().trim();
 
     return NextResponse.json({ reply: response });

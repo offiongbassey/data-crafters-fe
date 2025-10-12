@@ -6,7 +6,6 @@ import axios from "axios";
 import { useAuthStore } from "@/store/auth";
 import toast from "react-hot-toast";
 import { Spinner } from "@/components/ui/spinner";
-import Image from "next/image";
 import { Asterisk, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -16,8 +15,6 @@ const LessonPage = ({ params }: { params: Promise<{ lesson_id: string }>}) => {
     const [lesson, setLesson] = useState<LessonType>();
     const [loading, setLoading] = useState<boolean>(false);
     const user = useAuthStore((state) => (state.user))
-
-    console.log("Praams:", lesson_id);
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -46,8 +43,6 @@ const LessonPage = ({ params }: { params: Promise<{ lesson_id: string }>}) => {
         }
         fetchLesson();
     }, [user?.token, lesson_id]);
-
-    console.log("Lesson:", lesson);
 
     return (
         <div className="padding-container">

@@ -33,8 +33,7 @@ const Login = () => {
             setLoading(true);
             const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/auth/signup`, data);
             setLoading(false);
-
-            console.log("data: ", res);
+            
             toast.success("Account Created Successfully. Please login.");
             router.push("/login");
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -122,7 +121,7 @@ const Login = () => {
                             )}
                         />
                         
-                        <Button disabled={loading} type="submit" className="h-12 w-full mt-6" >{loading ? <Spinner />: "Login"}</Button>
+                        <Button disabled={loading} type="submit" className="h-12 w-full mt-6" >{loading ? <Spinner />: "Signup"}</Button>
                         <p className="text-sm mb-6 mt-4 text-center">Already have an account? <Link className="text-purple-600" href={"/login"}>Login</Link></p>
                         </form>
                     </Form>

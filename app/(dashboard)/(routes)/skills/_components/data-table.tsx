@@ -24,7 +24,7 @@ export type SkillType = {
   thumbnail_url: string;
   created_at: string;
   sections: SectionType[];
-  test: TestType[];
+  test: TestType;
   progress_record: ProgressRecordType;
 };
 
@@ -40,13 +40,14 @@ type SectionType = {
     quiz_included: boolean;
 }
 
-type TestType = {
+export type TestType = {
     id: number;
     status: string;
     total_questions: number;
     time_limit: number;
     attempts: number;
     questions: QuestionType[]
+    score: number;
 }
 
 type QuestionType = {
@@ -56,6 +57,7 @@ type QuestionType = {
     correct_answer: string;
     explanation: string;
     difficulty: string;
+    user_answer: string;
 }
 
 type ProgressRecordType = {
@@ -162,22 +164,13 @@ export function DataTable({
           return (
             <DropdownMenu>
       <DropdownMenuTrigger asChild>
-      <button
-              onClick={() => {
-                console.log("Viewing row:", row.original);
-                // navigate to detail page or show modal
-              }}
+            <button
             >
               <Ellipsis />
             </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuGroup>
-          <Link href={`/skills/${row.original.id}`}>
-            <DropdownMenuItem>
-                Continue
-            </DropdownMenuItem>
-          </Link>
           <Link href={`/skills/${row.original.id}`}>
             <DropdownMenuItem>
                 View

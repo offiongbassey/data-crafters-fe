@@ -66,7 +66,6 @@ const CreateLesson = () => {
         }, [user?.token]);
 
         const onSubmit = async (data: z.infer<typeof CreateLessonFormSchema>) => {
-            console.log("Data: ", data);
 
             try {
                 setLoading(true);
@@ -77,7 +76,6 @@ const CreateLesson = () => {
                 });
                 setLoading(false);
     
-                console.log("data: ", res);
                 toast.success("Lesson Created Successfully.");
                 router.push("/lessons");
               // eslint-disable-next-line @typescript-eslint/no-explicit-any

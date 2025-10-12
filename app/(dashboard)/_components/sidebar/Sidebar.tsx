@@ -38,7 +38,7 @@ const Sidebar = ({ toggle, setToggle }: Props) => {
     const logout = useAuthStore((state) => state.logout)
 
     return (
-        <div  className={`px-10 py-6 bg-white ${toggle ? "flex": "hidden md:flex"} flex-col justify-between h-screen min-w-62 fixed`}>
+        <div  className={`px-10 py-6 bg-white z-50 ${toggle ? "flex": "hidden md:flex"} flex-col justify-between h-screen min-w-62 fixed`}>
             <div className="flex flex-col justify-between gap-14">
                 <div className="flex gap-4 items-center">
                     <Link href={"/"}><h1 className="flex gap-1 font-semibold text-base md:text-2xl"><TrendingUpDown size={20} />EduAI</h1></Link>
