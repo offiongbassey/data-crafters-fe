@@ -10,6 +10,15 @@ EduAI is an **AI-powered teaching assistant** designed to support educators in a
 *Click the image above to watch the demo video on YouTube*
 
 **Direct Link:** https://www.youtube.com/watch?v=DhYVuvVn6n8
+---
+
+## Backend/Data Engineering Repo
+https://github.com/Olayemi-Awofe/EduAi
+---
+
+## Test Link
+https://eduai-rosy.vercel.app/
+
 
 ## Features
 
