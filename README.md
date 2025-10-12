@@ -3,6 +3,13 @@
 EduAI is an **AI-powered teaching assistant** designed to support educators in adapting to Nigeria’s **new skill-based curriculum**. The platform leverages **artificial intelligence** to generate structured lessons, assessments, and skill-based learning paths — while also providing a **voice assistant** to enhance teacher productivity and classroom engagement.
 
 ---
+## 🎥 Demo Video
+
+[![EduAI Demo](https://img.youtube.com/vi/DhYVuvVn6n8/0.jpg)](https://www.youtube.com/watch?v=DhYVuvVn6n8)
+
+*Click the image above to watch the demo video on YouTube*
+
+**Direct Link:** https://www.youtube.com/watch?v=DhYVuvVn6n8
 
 ## Features
 
